@@ -47,7 +47,7 @@ var map = new L.Map(document.querySelector('#map'), {
   zoom: 16
 });
 
-var marker; // = L.marker([52.890600, -0.905659]).addTo(map);
+const marker;
 var landingPattern = L.polyline([
   [0, 0],
   [0, 0],
@@ -66,12 +66,7 @@ var crab_line = L.polyline([
 }).addTo(map);
 
 function onMapClick(e) { // Function to handle marker placement on map click
-  if (marker) {
-    marker.setLatLng(e.latlng); // If marker exists, move it to new position
-  } else {
-    marker = L.marker(e.latlng).addTo(map); // Otherwise, create new marker
-  }
-
+  marker.setLatLng(e.latlng);
   updateLandingPattern();
 }
 
@@ -107,8 +102,6 @@ function updateLandingPattern() {
     latlngs[3].lat = upwind.lat
     latlngs[3].lng = upwind.lon
     landingPattern.setLatLngs(latlngs);
-    // console.log(finalDistance)
-    // console.log(baseDistance);
 
     var crab_angle = (Math.asin(wind_speed / canopy_speed) * 180 / Math.PI).toFixed(2)
 
@@ -143,9 +136,7 @@ function updateLandingPattern() {
     latlngs[3].lat = upwind.lat
     latlngs[3].lng = upwind.lon
     landingPattern.setLatLngs(latlngs);
-    // console.log(finalDistance)
-    // console.log(baseDistance);
-    // console.log(downWindDistance);
+    
     crab_line.setLatLngs([
       [0, 0],
       [0, 0]

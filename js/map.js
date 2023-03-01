@@ -26,7 +26,7 @@ class BingLayer extends L.TileLayer {
   }
 
   getTileUrl (coords) {
-    const quadkey = toQuadKey(coords.x, coords.y, coords.z) // eslint-disable-line no-undef
+    const quadkey = this.toQuadKey(coords.x, coords.y, coords.z) // eslint-disable-line no-undef
     const subdomain = this._getSubdomain(coords)
     const hasStyle = typeof this.options.style === 'string'
     const url = L.Util.template(this._url, {
@@ -108,7 +108,7 @@ function updateLandingPattern () {
     const finalBearing = windBearing + 180
 
     const baseDistance =
-      (finalHeight - baseHeight) ** glideRatio *
+      (finalHeight - baseHeight) * glideRatio *
       (Math.sqrt(canopySpeed ** 2 - windSpeed ** 2) / canopySpeed)
     const baseBearing = finalBearing + 90
 

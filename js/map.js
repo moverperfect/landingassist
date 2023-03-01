@@ -39,7 +39,7 @@ class BingLayer extends L.TileLayer {
 }
 
 const layer = new BingLayer(
-  'http://t{s}.tiles.virtualearth.net/tiles/a{q}.jpeg?g=1398',
+  'https://t{s}.tiles.virtualearth.net/tiles/a{q}.jpeg?g=1398',
   {
     subdomains: ['0', '1', '2', '3', '4'],
     attribution: '&copy; <a href="http://bing.com/maps">Bing Maps</a>'

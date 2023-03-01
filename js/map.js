@@ -3,12 +3,12 @@ const baseHeight = 300
 const finalHeight = 600
 const holdingHeight = 1000
 
-function calculateDestination (lat, lon, distance, bearing) {
+function calculateDestination (lat, lng, distance, bearing) {
   const geodesic = GeographicLib.Geodesic.WGS84
-  const result = geodesic.Direct(lat, lon, bearing, distance * 0.3048)
+  const result = geodesic.Direct(lat, lng, bearing, distance * 0.3048)
   return {
     lat: result.lat2,
-    lon: result.lon2
+    lng: result.lon2
   }
 }
 
@@ -102,49 +102,26 @@ function updateLandingPattern () {
 
   // document.getElementById('crab_angle_p').hidden = !calculate_crab_angle
 
-  if (calculateCrabAngle) {
-    const finalDistance =
-      baseHeight * glideRatio * (1 - windSpeed / canopySpeed)
-    const finalBearing = windBearing + 180
+  const latlngs = landingPattern.getLatLngs()
+  latlngs[0] = marker.getLatLng()
+  const finalCoords = calculateFinal(latlngs[0], glideRatio, windSpeed, canopySpeed, windBearing)
+  latlngs[1].lat = finalCoords.lat
+  latlngs[1].lng = finalCoords.lng
 
+  if (calculateCrabAngle) {
     const baseDistance =
       (finalHeight - baseHeight) * glideRatio *
       (Math.sqrt(canopySpeed ** 2 - windSpeed ** 2) / canopySpeed)
-    const baseBearing = finalBearing + 90
+    const baseBearing = windBearing + 180 + 90
 
-    const downWindDistance =
-      (holdingHeight - finalHeight) *
-      glideRatio *
-      ((windSpeed + canopySpeed) / canopySpeed)
-    const downWindBearing = windBearing
-
-    const latlngs = landingPattern.getLatLngs()
-    latlngs[0] = marker.getLatLng()
-    const downWind = calculateDestination(
-      latlngs[0].lat,
-      latlngs[0].lng,
-      finalDistance,
-      finalBearing
-    )
-    latlngs[1].lat = downWind.lat
-    latlngs[1].lng = downWind.lon
-    const crosswind = calculateDestination(
+    const baseCoords = calculateDestination(
       latlngs[1].lat,
       latlngs[1].lng,
       baseDistance,
       baseBearing
     )
-    latlngs[2].lat = crosswind.lat
-    latlngs[2].lng = crosswind.lon
-    const upwind = calculateDestination(
-      latlngs[2].lat,
-      latlngs[2].lng,
-      downWindDistance,
-      downWindBearing
-    )
-    latlngs[3].lat = upwind.lat
-    latlngs[3].lng = upwind.lon
-    landingPattern.setLatLngs(latlngs)
+    latlngs[2].lat = baseCoords.lat
+    latlngs[2].lng = baseCoords.lng
 
     const crabAngle = (
       (Math.asin(windSpeed / canopySpeed) * 180) /
@@ -153,41 +130,21 @@ function updateLandingPattern () {
     document.getElementById('crab_angle').textContent = crabAngle
 
     const crabBearingCoord = calculateDestination(
-      crosswind.lat,
-      crosswind.lon,
+      baseCoords.lat,
+      baseCoords.lng,
       0.5 * baseDistance,
       baseBearing + 180 - crabAngle
     )
-    const crabLineLatLngs = [crosswind, crabBearingCoord]
+    const crabLineLatLngs = [baseCoords, crabBearingCoord]
     crabLine.setLatLngs(crabLineLatLngs)
   } else {
-    const finalDistance =
-      baseHeight * glideRatio * (1 - windSpeed / canopySpeed)
-    const finalBearing = windBearing + 180
-
     const baseDistance =
       (finalHeight - baseHeight) *
       glideRatio *
       (Math.sqrt(canopySpeed ** 2 + windSpeed ** 2) / canopySpeed)
     const baseBearing =
-      finalBearing + 180 - (Math.atan(canopySpeed / windSpeed) * 180) / Math.PI
+      windBearing + 180 + 180 - (Math.atan(canopySpeed / windSpeed) * 180) / Math.PI
 
-    const downWindDistance =
-      (holdingHeight - finalHeight) *
-      glideRatio *
-      ((windSpeed + canopySpeed) / canopySpeed)
-    const downWindBearing = windBearing
-
-    const latlngs = landingPattern.getLatLngs()
-    latlngs[0] = marker.getLatLng()
-    const downWind = calculateDestination(
-      latlngs[0].lat,
-      latlngs[0].lng,
-      finalDistance,
-      finalBearing
-    )
-    latlngs[1].lat = downWind.lat
-    latlngs[1].lng = downWind.lon
     const crosswind = calculateDestination(
       latlngs[1].lat,
       latlngs[1].lng,
@@ -195,16 +152,7 @@ function updateLandingPattern () {
       baseBearing
     )
     latlngs[2].lat = crosswind.lat
-    latlngs[2].lng = crosswind.lon
-    const upwind = calculateDestination(
-      latlngs[2].lat,
-      latlngs[2].lng,
-      downWindDistance,
-      downWindBearing
-    )
-    latlngs[3].lat = upwind.lat
-    latlngs[3].lng = upwind.lon
-    landingPattern.setLatLngs(latlngs)
+    latlngs[2].lng = crosswind.lng
 
     const crabAngle = (
       90 -
@@ -215,13 +163,42 @@ function updateLandingPattern () {
 
     const crabBearingCoord = calculateDestination(
       crosswind.lat,
-      crosswind.lon,
+      crosswind.lng,
       0.5 * baseDistance,
       baseBearing + 180 - crabAngle
     )
     const crabLineLatLngs = [crosswind, crabBearingCoord]
     crabLine.setLatLngs(crabLineLatLngs)
   }
+
+  const downWindDistance =
+      (holdingHeight - finalHeight) *
+      glideRatio *
+      ((windSpeed + canopySpeed) / canopySpeed)
+  const downWindBearing = windBearing
+
+  const downWindCoords = calculateDestination(
+    latlngs[2].lat,
+    latlngs[2].lng,
+    downWindDistance,
+    downWindBearing
+  )
+  latlngs[3].lat = downWindCoords.lat
+  latlngs[3].lng = downWindCoords.lng
+  landingPattern.setLatLngs(latlngs)
+}
+
+function calculateFinal(startPoint, glideRatio, windSpeed, canopySpeed, windBearing) {
+  const finalDistance =
+      baseHeight * glideRatio * (1 - windSpeed / canopySpeed)
+  const finalBearing = windBearing + 180
+  const finalCoords = calculateDestination(
+    startPoint.lat,
+    startPoint.lng,
+    finalDistance,
+    finalBearing
+  )
+  return finalCoords
 }
 
 map.on('click', onMapClick)

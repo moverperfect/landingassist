@@ -7,14 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-    crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
-  <script src="https://cdn.jsdelivr.net/npm/geographiclib@1.52.2/geographiclib.min.js"></script>
-  <!-- Make sure you put this AFTER Leaflet's CSS -->
-  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
   <style>
     /* Set map size and center for small screens */
     @media (max-width: 767px) {
@@ -64,7 +58,7 @@
       margin: auto;
     }
 
-    .intContainer {
+    .int-container {
       width: 100%;
     }
 
@@ -73,29 +67,35 @@
 
 <body>
   <div class="container">
-    <div class="intContainer">
+    <div class="int-container">
       <div>
-        <label for="wind_speed">Wind Speed:</label>
-        <input type="number" id="wind_speed" name="wind_speed" value="10">
-        <label for="canopy_speed">Canopy Speed:</label>
-        <input type="number" id="canopy_speed" name="canopy_speed" value="20">
-        <label for="wind_bearing">Wind Bearing:</label>
-        <input type="number" id="wind_bearing" name="wind_bearing" value="60">
-        <label for="glide_ratio">Glide Ratio:</label>
-        <input type="number" id="glide_ratio" name="glide_ratio" value="2.5">
-        <label for="calculate_crab_angle">Straight flight:</label>
-        <input type="checkbox" id="calculate_crab_angle" name="calculate_crab_angle" value="false">
-        <label for="calculate_crab_angle">When disabled, it is assumed the parachutist faces perpendicular to the wind
+        <label for="wind-speed">Wind Speed:</label>
+        <input type="number" id="wind-speed" name="wind-speed" value="10">
+        <label for="canopy-speed">Canopy Speed:</label>
+        <input type="number" id="canopy-speed" name="canopy-speed" value="20">
+        <label for="wind-bearing">Wind Bearing:</label>
+        <input type="number" id="wind-bearing" name="wind-bearing" value="60">
+        <label for="glide-ratio">Glide Ratio:</label>
+        <input type="number" id="glide-ratio" name="glide-ratio" value="2.5">
+        <label for="calculate-crab-angle">Straight flight:</label>
+        <input type="checkbox" id="calculate-crab-angle" name="calculate-crab-angle" value="false">
+        <label for="calculate-crab-angle">When disabled, it is assumed the parachutist faces perpendicular to the wind
           during
           the crosswind section.</label>
-        <label for="calculate_crab_angle">When enabled, the landing pattern will be 2 90° turns.</label>
-        <p id="crab_angle_p"><b>Crab angle: <span id="crab_angle"></span></b></p>
+        <label for="calculate-crab-angle">When enabled, the landing pattern will be 2 90° turns.</label>
+        <p id="crab-angle-p"><b>Crab angle: <span id="crab-angle"></span></b></p>
       </div>
       <div id="map"></div>
     </div>
   </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/geographiclib@1.52.2/geographiclib.min.js"></script>
+<!-- Make sure you put this AFTER Leaflet's CSS -->
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 <script src="js/map.js"></script>
+
 <script>
   const inputs = document.querySelectorAll('input');
   inputs.forEach(input => {

@@ -30,7 +30,6 @@ class BingLayer extends L.TileLayer {
     const subdomain = this._getSubdomain(coords)
     const hasStyle = typeof this.options.style === 'string'
     const url = L.Util.template(this._url, {
-
       q: quadkey,
       s: subdomain
     })
@@ -47,14 +46,12 @@ const layer = new BingLayer(
 )
 
 const map = L.map(document.querySelector('#map'), {
-
   layers: [layer],
   center: [52.8906, -0.905659],
   zoom: 16
 })
 
 const landingPattern = L.polyline(
-
   [
     [0, 0],
     [0, 0],
@@ -67,7 +64,6 @@ const landingPattern = L.polyline(
 ).addTo(map)
 
 const crabLine = L.polyline(
-
   [
     [0, 0],
     [0, 0]
@@ -86,12 +82,12 @@ function onMapClick (e) {
 }
 
 function updateLandingPattern () {
-  const windSpeedInput = document.getElementById('wind_speed')
-  const canopySpeedInput = document.getElementById('canopy_speed')
-  const windBearingInput = document.getElementById('wind_bearing')
-  const glideRatioInput = document.getElementById('glide_ratio')
+  const windSpeedInput = document.getElementById('wind-speed')
+  const canopySpeedInput = document.getElementById('canopy-speed')
+  const windBearingInput = document.getElementById('wind-bearing')
+  const glideRatioInput = document.getElementById('glide-ratio')
   const calculateCrabAngleCheckbox = document.getElementById(
-    'calculate_crab_angle'
+    'calculate-crab-angle'
   )
 
   const windSpeed = parseFloat(windSpeedInput.value) || 0
@@ -100,17 +96,24 @@ function updateLandingPattern () {
   const glideRatio = parseFloat(glideRatioInput.value) || 0
   const calculateCrabAngle = calculateCrabAngleCheckbox.checked
 
-  // document.getElementById('crab_angle_p').hidden = !calculate_crab_angle
+  // document.getElementById('crab-angle-p').hidden = !calculate-crab-angle
 
   const latlngs = landingPattern.getLatLngs()
   latlngs[0] = marker.getLatLng()
-  const finalCoords = calculateFinal(latlngs[0], glideRatio, windSpeed, canopySpeed, windBearing)
+  const finalCoords = calculateFinal(
+    latlngs[0],
+    glideRatio,
+    windSpeed,
+    canopySpeed,
+    windBearing
+  )
   latlngs[1].lat = finalCoords.lat
   latlngs[1].lng = finalCoords.lng
 
   if (calculateCrabAngle) {
     const baseDistance =
-      (finalHeight - baseHeight) * glideRatio *
+      (finalHeight - baseHeight) *
+      glideRatio *
       (Math.sqrt(canopySpeed ** 2 - windSpeed ** 2) / canopySpeed)
     const baseBearing = windBearing + 180 + 90
 
@@ -127,7 +130,7 @@ function updateLandingPattern () {
       (Math.asin(windSpeed / canopySpeed) * 180) /
       Math.PI
     ).toFixed(2)
-    document.getElementById('crab_angle').textContent = crabAngle
+    document.getElementById('crab-angle').textContent = crabAngle
 
     const crabBearingCoord = calculateDestination(
       baseCoords.lat,
@@ -143,7 +146,10 @@ function updateLandingPattern () {
       glideRatio *
       (Math.sqrt(canopySpeed ** 2 + windSpeed ** 2) / canopySpeed)
     const baseBearing =
-      windBearing + 180 + 180 - (Math.atan(canopySpeed / windSpeed) * 180) / Math.PI
+      windBearing +
+      180 +
+      180 -
+      (Math.atan(canopySpeed / windSpeed) * 180) / Math.PI
 
     const crosswind = calculateDestination(
       latlngs[1].lat,
@@ -159,7 +165,7 @@ function updateLandingPattern () {
       (Math.atan(canopySpeed / windSpeed) * 180) / Math.PI
     ).toFixed(2)
 
-    document.getElementById('crab_angle').textContent = crabAngle
+    document.getElementById('crab-angle').textContent = crabAngle
 
     const crabBearingCoord = calculateDestination(
       crosswind.lat,
@@ -172,9 +178,9 @@ function updateLandingPattern () {
   }
 
   const downWindDistance =
-      (holdingHeight - finalHeight) *
-      glideRatio *
-      ((windSpeed + canopySpeed) / canopySpeed)
+    (holdingHeight - finalHeight) *
+    glideRatio *
+    ((windSpeed + canopySpeed) / canopySpeed)
   const downWindBearing = windBearing
 
   const downWindCoords = calculateDestination(
@@ -188,9 +194,14 @@ function updateLandingPattern () {
   landingPattern.setLatLngs(latlngs)
 }
 
-function calculateFinal(startPoint, glideRatio, windSpeed, canopySpeed, windBearing) {
-  const finalDistance =
-      baseHeight * glideRatio * (1 - windSpeed / canopySpeed)
+function calculateFinal (
+  startPoint,
+  glideRatio,
+  windSpeed,
+  canopySpeed,
+  windBearing
+) {
+  const finalDistance = baseHeight * glideRatio * (1 - windSpeed / canopySpeed)
   const finalBearing = windBearing + 180
   const finalCoords = calculateDestination(
     startPoint.lat,

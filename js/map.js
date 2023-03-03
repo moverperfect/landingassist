@@ -1,7 +1,4 @@
 /* global GeographicLib, L */
-const baseHeight = 300
-const finalHeight = 600
-const holdingHeight = 1000
 
 function calculateDestination (lat, lng, distance, bearing) {
   const geodesic = GeographicLib.Geodesic.WGS84
@@ -89,12 +86,18 @@ function updateLandingPattern () {
   const calculateCrabAngleCheckbox = document.getElementById(
     'calculate-crab-angle'
   )
+  const downWindHeightInput = document.getElementById('downwind-height')
+  const baseHeightInput = document.getElementById('base-height')
+  const finalHeightInput = document.getElementById('final-height')
 
   const windSpeed = parseFloat(windSpeedInput.value) || 0
   const canopySpeed = parseFloat(canopySpeedInput.value) || 0
   const windBearing = parseFloat(windBearingInput.value) || 0
   const glideRatio = parseFloat(glideRatioInput.value) || 0
   const calculateCrabAngle = calculateCrabAngleCheckbox.checked
+  const downWindHeight = parseInt(downWindHeightInput.value)
+  const baseHeight = parseInt(baseHeightInput.value)
+  const finalHeight = parseInt(finalHeightInput.value)
 
   // document.getElementById('crab-angle-p').hidden = !calculate-crab-angle
 
@@ -105,14 +108,15 @@ function updateLandingPattern () {
     glideRatio,
     windSpeed,
     canopySpeed,
-    windBearing
+    windBearing,
+    finalHeight
   )
   latlngs[1].lat = finalCoords.lat
   latlngs[1].lng = finalCoords.lng
 
   if (calculateCrabAngle) {
     const baseDistance =
-      (finalHeight - baseHeight) *
+      (baseHeight - finalHeight) *
       glideRatio *
       (Math.sqrt(canopySpeed ** 2 - windSpeed ** 2) / canopySpeed)
     const baseBearing = windBearing + 180 + 90
@@ -142,7 +146,7 @@ function updateLandingPattern () {
     crabLine.setLatLngs(crabLineLatLngs)
   } else {
     const baseDistance =
-      (finalHeight - baseHeight) *
+      (baseHeight - finalHeight) *
       glideRatio *
       (Math.sqrt(canopySpeed ** 2 + windSpeed ** 2) / canopySpeed)
     const baseBearing =
@@ -178,7 +182,7 @@ function updateLandingPattern () {
   }
 
   const downWindDistance =
-    (holdingHeight - finalHeight) *
+    (downWindHeight - baseHeight) *
     glideRatio *
     ((windSpeed + canopySpeed) / canopySpeed)
   const downWindBearing = windBearing
@@ -199,9 +203,10 @@ function calculateFinal (
   glideRatio,
   windSpeed,
   canopySpeed,
-  windBearing
+  windBearing,
+  finalHeight
 ) {
-  const finalDistance = baseHeight * glideRatio * (1 - windSpeed / canopySpeed)
+  const finalDistance = finalHeight * glideRatio * (1 - windSpeed / canopySpeed)
   const finalBearing = windBearing + 180
   const finalCoords = calculateDestination(
     startPoint.lat,

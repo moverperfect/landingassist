@@ -1,4 +1,4 @@
-/* global GeographicLib, L */
+/* global GeographicLib, L, selectedCoords */
 
 function calculateDestination (lat, lng, distance, bearing) {
   const geodesic = GeographicLib.Geodesic.WGS84

@@ -49,6 +49,16 @@
       border: none;
       box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
     }
+    
+    select {
+      display: block;
+      margin: 0px auto;
+      text-align: center;
+      padding: 0px;
+      border-radius: 5px;
+      border: none;
+      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+    }
 
     label {
       display: block;
@@ -125,6 +135,9 @@
   <div class="container">
     <div class="int-container">
       <div class="settings" id="settings">
+        <label for="location-dropdown">Select a DZ:</label>
+        <select title="Select a location" id="location-dropdown" onchange="getLocationCoordinates()">
+        </select>
         <label for="wind-speed">Wind Speed:</label>
         <input type="number" id="wind-speed" name="wind-speed" value="10">
         <label for="wind-bearing">Wind Bearing:</label>
@@ -167,6 +180,34 @@
         optionsContainer.style.display = "none";
       }
     });
+    const locations = [
+      { name: "Langar", value: "langar", coordinates: [52.8906, -0.905659] },
+      { name: "Hinton", value: "hinton", coordinates: [52.028190850099, -1.206420618686608] },
+    ];
+
+    const dropdown = document.getElementById("location-dropdown");
+
+    locations.forEach(location => {
+      const option = document.createElement("option");
+      option.value = location.value;
+      option.text = location.name;
+      dropdown.appendChild(option);
+    });
+
+    var selectedCoords;
+
+    function getLocationCoordinates() {
+      const selectedIndex = dropdown.selectedIndex;
+        const location = dropdown.options[selectedIndex].value;
+        selectedCoords = locations.find(item => item.value === location).coordinates;
+        if (updateLandingPattern != null) {
+          map.panTo(selectedCoords);
+          onMapClick({latlng: selectedCoords})
+          updateLandingPattern();
+        }
+      }
+
+    getLocationCoordinates();
   </script>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"

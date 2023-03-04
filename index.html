@@ -10,6 +10,14 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
   <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
     /* Set map size and center for small screens */
     @media (max-width: 767px) {
       #map {
@@ -34,57 +42,80 @@
     /* Style input fields */
     input {
       display: block;
-      margin: 0 auto 10px;
+      margin: 0px auto;
       text-align: center;
+      padding: 0px;
+      border-radius: 5px;
+      border: none;
+      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
     }
 
     label {
       display: block;
       text-align: center;
+      margin: 0px 0 0px;
+      font-weight: bold;
     }
 
     p {
       display: block;
       text-align: center;
+      margin: 0px 0;
     }
 
     .container {
       display: flex;
       flex-direction: row;
       align-items: center;
+      justify-content: center;
       margin: auto;
       height: 100vh;
+      border: 1px solid #ccc;
+      box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+      overflow: hidden;
     }
 
     .int-container {
       width: 100%;
       height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
 
     html {
       height: 100vh;
     }
 
-    body {
-      min-height: 100vh;
-    }
-
     #map {
       height: 49%;
+      border: 1px solid #ccc;
+      box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
     }
 
     #settings {
       height: 50%;
+      overflow: auto;
     }
 
     #options-container {
       display: none;
+      margin-top: 20px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
     }
 
     #options-link {
       color: blue;
       cursor: pointer;
       text-decoration: underline;
+      margin-top: 10px;
     }
 
   </style>
@@ -93,18 +124,17 @@
 <body>
   <div class="container">
     <div class="int-container">
-      <div class="settings">
+      <div class="settings" id="settings">
         <label for="wind-speed">Wind Speed:</label>
         <input type="number" id="wind-speed" name="wind-speed" value="10">
         <label for="wind-bearing">Wind Bearing:</label>
         <input type="number" id="wind-bearing" name="wind-bearing" value="60">
-        <label for="calculate-crab-angle">Straight flight:</label>
+        <label for="calculate-crab-angle">Straight Flight:</label>
         <input type="checkbox" id="calculate-crab-angle" name="calculate-crab-angle" value="false">
-        <label for="calculate-crab-angle">When disabled, it is assumed the parachutist faces perpendicular to the wind
-          during
-          the crosswind section.</label>
-        <label for="calculate-crab-angle">When enabled, the landing pattern will be 2 90° turns.</label>
-        <p id="crab-angle-p"><b>Crab angle: <span id="crab-angle"></span></b></p>
+        <p>When disabled, it is assumed the parachutist faces perpendicular to the wind
+          during the crosswind section.</p>
+        <p>When enabled, the landing pattern will be 2 90° turns.</p>
+        <p id="crab-angle-p"><b>Crab Angle: <span id="crab-angle"></span></b></p>
         <!-- Add the "Options" hyperlink-style text and the "Base Height" text box -->
         <p id="options-link">Options</p>
         <div id="options-container">
@@ -131,6 +161,8 @@
     optionsLink.addEventListener("click", function() {
       if (optionsContainer.style.display === "none") {
         optionsContainer.style.display = "block";
+        // Scroll down to the bottom of the settings container
+        document.getElementById("settings").scrollTop = optionsLink.offsetTop - 25;
       } else {
         optionsContainer.style.display = "none";
       }

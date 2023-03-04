@@ -44,7 +44,7 @@ const layer = new BingLayer(
 
 const map = L.map(document.querySelector('#map'), {
   layers: [layer],
-  center: [52.8906, -0.905659],
+  center: selectedCoords,
   zoom: 16
 })
 
@@ -71,10 +71,11 @@ const crabLine = L.polyline(
   }
 ).addTo(map)
 
-const marker = L.marker([52.8906, -0.905659]).addTo(map)
+const marker = L.marker(selectedCoords).addTo(map)
 
 function onMapClick (e) {
   marker.setLatLng(e.latlng)
+  console.log(e.latlng)
   updateLandingPattern()
 }
 

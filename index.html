@@ -49,7 +49,7 @@
       border: none;
       box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
     }
-    
+
     select {
       display: block;
       margin: 0px auto;
@@ -142,6 +142,8 @@
         <input type="number" id="wind-speed" name="wind-speed" value="10">
         <label for="wind-bearing">Wind Bearing:</label>
         <input type="number" id="wind-bearing" name="wind-bearing" value="60">
+        <label for="right-hand-pattern">Right Hand Pattern:</label>
+        <input type="checkbox" id="right-hand-pattern" name="right-hand-pattern" value="false">
         <label for="calculate-crab-angle">Straight Flight:</label>
         <input type="checkbox" id="calculate-crab-angle" name="calculate-crab-angle" value="false">
         <p>When disabled, it is assumed the parachutist faces perpendicular to the wind
@@ -198,14 +200,14 @@
 
     function getLocationCoordinates() {
       const selectedIndex = dropdown.selectedIndex;
-        const location = dropdown.options[selectedIndex].value;
-        selectedCoords = locations.find(item => item.value === location).coordinates;
-        if (updateLandingPattern != null) {
-          map.panTo(selectedCoords);
-          onMapClick({latlng: selectedCoords})
-          updateLandingPattern();
-        }
+      const location = dropdown.options[selectedIndex].value;
+      selectedCoords = locations.find(item => item.value === location).coordinates;
+      if (typeof updateLandingPattern === "function") {
+        map.panTo(selectedCoords);
+        onMapClick({ latlng: selectedCoords })
+        updateLandingPattern();
       }
+    }
 
     getLocationCoordinates();
   </script>

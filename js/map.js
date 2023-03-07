@@ -38,7 +38,7 @@ const layer = new BingLayer(
   'https://t{s}.tiles.virtualearth.net/tiles/a{q}.jpeg?g=1398',
   {
     subdomains: ['0', '1', '2', '3', '4'],
-    attribution: '&copy; <a href="http://bing.com/maps">Bing Maps</a>'
+    attribution: '&copy; <a href="https://bing.com/maps">Bing Maps</a>'
   }
 )
 

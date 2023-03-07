@@ -1,5 +1,4 @@
 ---
-#checkov:skip=CKV2_GHA_1:Write All allowed in this context
 # MegaLinter GitHub Action configuration file
 # More info at https://megalinter.io
 name: MegaLinter
@@ -45,6 +44,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # ADD YOUR CUSTOM ENV VARIABLES HERE OR DEFINE THEM IN A FILE .mega-linter.yml AT THE ROOT OF YOUR REPOSITORY
           DISABLE: COPYPASTE,SPELL
+          REPOSITORY_CHECKOV_ARGUMENTS: --skip-check CKV2_GHA_1
 
       # Upload MegaLinter artifacts
       - name: Archive production artifacts

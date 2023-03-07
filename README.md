@@ -1,7 +1,12 @@
 # Landing Assist
-![Website](https://img.shields.io/website?url=https%3A%2F%2Flandingassist.moverperfect.com) ![GitHub deployments](https://img.shields.io/github/deployments/moverperfect/landingassist/github-pages?label=deployment) ![GitHub last commit](https://img.shields.io/github/last-commit/moverperfect/landingassist?label=last%20activity) ![GitHub issues](https://img.shields.io/github/issues-raw/moverperfect/landingassist) [![GitHub Super-Linter](https://github.com/moverperfect/landingassist/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter) ![GitHub](https://img.shields.io/github/license/moverperfect/landingassist)
+![Site](https://img.shields.io/website?url=https%3A%2F%2Flandingassist.moverperfect.com)
+![GitHub deployments](https://img.shields.io/github/deployments/moverperfect/landingassist/github-pages?label=deployment)
+![GitHub last commit](https://img.shields.io/github/last-commit/moverperfect/landingassist?label=last%20activity)
+![GitHub issues](https://img.shields.io/github/issues-raw/moverperfect/landingassist)
+[![GitHub Super-Linter](https://github.com/moverperfect/landingassist/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
+![GitHub](https://img.shields.io/github/license/moverperfect/landingassist)
 
-Landing Assist is a website that helps beginner skydivers to land accurately. This project provides a simple and interactive way to plan a landing pattern, considering variables such as wind speed, wind direction, and canopy speed. The website is built using HTML, CSS, and JavaScript, and uses the Leaflet library for the map functionality.
+Landing Assist is a site that helps beginner skydivers to land accurately. This project provides a simple and interactive way to plan a landing pattern, considering variables such as wind speed, wind direction, and canopy speed. The site is built using HTML, CSS, and JavaScript, and uses the Leaflet library for the map functionality.
 
 ## Features
 * Select a drop zone from a dropdown list
@@ -23,7 +28,7 @@ This project uses the following GitHub Actions:
 This project is licensed under the GNU General Public License v3.0.
 
 ## Usage
-To use the website, visit https://landingassist.moverperfect.com
+To use the site, visit <https://landingassist.moverperfect.com>
 
 ## Contributing
 Contributions to this project are welcome. To contribute, please fork the repository and submit a pull request with your changes.

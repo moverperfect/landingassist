@@ -4,9 +4,13 @@
 <head>
   <meta charset="utf-8" />
   <title>Map with Waypoint - Bing Aerial</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Discover a landing assist map for Drop Zones (DZ) using aerial imagery. Customize wind speed, wind bearing, and landing pattern options to suit your needs. Explore downwind height, base height, final height, canopy speed, and glide ratio options. The map is fully responsive and available in different screen sizes." />
+  <meta name="keywords"
+    content="landing assist map, drop zones, DZ, aerial imagery, wind speed, wind bearing, landing pattern, downwind height, base height, final height, canopy speed, glide ratio, responsive design" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
   <style>
@@ -139,13 +143,13 @@
         <select title="Select a location" id="location-dropdown" onchange="getLocationCoordinates()">
         </select>
         <label for="wind-speed">Wind Speed:</label>
-        <input type="number" id="wind-speed" name="wind-speed" value="10">
+        <input type="number" id="wind-speed" name="wind-speed" value="10" />
         <label for="wind-bearing">Wind Bearing:</label>
-        <input type="number" id="wind-bearing" name="wind-bearing" value="60">
+        <input type="number" id="wind-bearing" name="wind-bearing" value="60" />
         <label for="right-hand-pattern">Right Hand Pattern:</label>
-        <input type="checkbox" id="right-hand-pattern" name="right-hand-pattern" value="false">
+        <input type="checkbox" id="right-hand-pattern" name="right-hand-pattern" value="false" />
         <label for="calculate-crab-angle">Straight Flight:</label>
-        <input type="checkbox" id="calculate-crab-angle" name="calculate-crab-angle" value="false">
+        <input type="checkbox" id="calculate-crab-angle" name="calculate-crab-angle" value="false" />
         <p>When disabled, it is assumed the parachutist faces perpendicular to the wind
           during the crosswind section.</p>
         <p>When enabled, the landing pattern will be 2 90° turns.</p>
@@ -154,15 +158,15 @@
         <p id="options-link">Options</p>
         <div id="options-container">
           <label for="downwind-height">Downwind Height:</label>
-          <input type="number" id="downwind-height" name="downwind-height" value="1000">
+          <input type="number" id="downwind-height" name="downwind-height" value="1000" />
           <label for="base-height">Base Height:</label>
-          <input type="number" id="base-height" name="base-height" value="600">
+          <input type="number" id="base-height" name="base-height" value="600" />
           <label for="final-height">Final Height:</label>
-          <input type="number" id="final-height" name="final-height" value="300">
+          <input type="number" id="final-height" name="final-height" value="300" />
           <label for="canopy-speed">Canopy Speed:</label>
-          <input type="number" id="canopy-speed" name="canopy-speed" value="20">
+          <input type="number" id="canopy-speed" name="canopy-speed" value="20" />
           <label for="glide-ratio">Glide Ratio:</label>
-          <input type="number" id="glide-ratio" name="glide-ratio" value="2.5">
+          <input type="number" id="glide-ratio" name="glide-ratio" value="2.5" />
         </div>
       </div>
       <div id="map"></div>

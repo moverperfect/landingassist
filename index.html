@@ -226,10 +226,55 @@
 <script src="js/map.js"></script>
 
 <script>
-  const inputs = document.querySelectorAll('input');
+  // Add event listeners to store input values in local storage or session storage
+  const localStorageOptions = [
+    "downwind-height",
+    "base-height",
+    "final-height",
+    "canopy-speed",
+    "glide-ratio",
+    "location-dropdown",
+  ];
+
+  const sessionStorageOptions = [
+    "wind-speed",
+    "wind-bearing",
+    "right-hand-pattern",
+    "calculate-crab-angle",
+  ];
+
+  const inputs = document.querySelectorAll("input, select");
   inputs.forEach(input => {
-    input.addEventListener('input', updateLandingPattern);
+    const storeInLocalStorage = localStorageOptions.includes(input.id);
+    const storeInSessionStorage = sessionStorageOptions.includes(input.id);
+
+    // Retrieve and set the saved value if it exists
+    const storage = storeInLocalStorage ? localStorage : sessionStorage;
+    const savedValue = storage.getItem(input.id);
+    if (savedValue) {
+      if (input.type === "checkbox") {
+        input.checked = JSON.parse(savedValue);
+      } else {
+        input.value = savedValue;
+      }
+    }
+
+    // Add event listener to store the value when changed
+    input.addEventListener("change", () => {
+      if (input.type === "checkbox") {
+        storage.setItem(input.id, JSON.stringify(input.checked));
+      } else {
+        storage.setItem(input.id, input.value);
+      }
+    });
+
+    // Update landing pattern when input values change, excluding "location-dropdown"
+    if (input.id !== "location-dropdown") {
+      input.addEventListener("input", updateLandingPattern);
+    }
   });
+
+  getLocationCoordinates();
 </script>
 
 </html>

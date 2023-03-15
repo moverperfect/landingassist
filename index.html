@@ -236,17 +236,9 @@
     "location-dropdown",
   ];
 
-  const sessionStorageOptions = [
-    "wind-speed",
-    "wind-bearing",
-    "right-hand-pattern",
-    "calculate-crab-angle",
-  ];
-
   const inputs = document.querySelectorAll("input, select");
   inputs.forEach(input => {
     const storeInLocalStorage = localStorageOptions.includes(input.id);
-    const storeInSessionStorage = sessionStorageOptions.includes(input.id);
 
     // Retrieve and set the saved value if it exists
     const storage = storeInLocalStorage ? localStorage : sessionStorage;

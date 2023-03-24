@@ -4,6 +4,7 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/moverperfect/landingassist?label=last%20activity)
 ![GitHub issues](https://img.shields.io/github/issues-raw/moverperfect/landingassist)
 [![MegaLinter](https://github.com/moverperfect/landingassist/workflows/MegaLinter/badge.svg?branch=main)](https://github.com/moverperfect/landingassist/actions?query=workflow%3AMegaLinter+branch%3Amain)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=moverperfect_landingassist&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=moverperfect_landingassist)
 ![GitHub](https://img.shields.io/github/license/moverperfect/landingassist)
 
 Landing Assist is a site that helps beginner skydivers to land accurately. This project provides a simple and interactive way to plan a landing pattern, considering variables such as wind speed, wind direction, and canopy speed. The site is built using HTML, CSS, and JavaScript, and uses the Leaflet library for the map functionality.
